@@ -1,0 +1,5 @@
+This is a plugin for IDA (6.1) to help analyze data flow.
+
+It's very limited and so far tailored to my use case - Ares hook generation.
+
+It produces a stub hook function covering the currently selected area, including read/write links to data. So far, only general registers and stackvars are supported.
