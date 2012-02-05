@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -45,7 +45,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;IDASM_EXPORTS;__NT__;__IDP__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>f:\soft\IDA Pro Advanced v6.1.Windows.incl.Hex-Rays.x86.Decompiler.v1.5.READ.NFO-RDW\Hex-Rays.IDA.Pro.Advanced.SDK.v6.1-RDW\idasdk61\include\;c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>c:\Program Files (x86)\IDA 6.1\sdk\include\;c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -57,14 +57,14 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).plw</OutputFile>
       <AdditionalLibraryDirectories>c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Lib\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);f:\soft\IDA Pro Advanced v6.1.Windows.incl.Hex-Rays.x86.Decompiler.v1.5.READ.NFO-RDW\Hex-Rays.IDA.Pro.Advanced.SDK.v6.1-RDW\idasdk61\lib\x86_win_vc_32\ida.lib</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);c:\Program Files (x86)\IDA 6.1\sdk\lib\x86_win_vc_32\ida.lib</AdditionalDependencies>
       <AdditionalOptions>/EXPORT:PLUGIN %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;IDASM_EXPORTS;__NT__;__IDP__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>f:\soft\IDA Pro Advanced v6.1.Windows.incl.Hex-Rays.x86.Decompiler.v1.5.READ.NFO-RDW\Hex-Rays.IDA.Pro.Advanced.SDK.v6.1-RDW\idasdk61\include\;c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>c:\Program Files (x86)\IDA 6.1\sdk\include\;c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

@@ -40,6 +40,7 @@ public:
 
 struct op_acc {
 	ea_t firstRead;
+	ea_t firstWrite;
 	ea_t lastWrite;
 };
 
@@ -125,7 +126,9 @@ void idaapi run(int /*arg*/)
 									auto r_index = x86_index(op);
 									op_ident id_index(r_index);
 									id_index.normalizeReg();
-									affectedRegs.push_back(id_index);
+									if(id_index.regIdx != R_sp) {
+										affectedRegs.push_back(id_index);
+									}
 								}
 							}
 							break;
@@ -133,7 +136,7 @@ void idaapi run(int /*arg*/)
 						case o_displ:
 							{
 								auto r_base = x86_base(op);
-								op_ident id_base(r_base);
+								op_ident id_base(r_base, op.addr);
 								id_base.normalizeReg();
 
 								affectedRegs.push_back(id_base);
@@ -141,7 +144,9 @@ void idaapi run(int /*arg*/)
 									auto r_index = x86_index(op);
 									op_ident id_index(r_index, op.addr);
 									id_index.normalizeReg();
-									affectedRegs.push_back(id_index);
+									if(id_index.regIdx != R_sp) {
+										affectedRegs.push_back(id_index);
+									}
 								}
 							}
 							break;
@@ -152,11 +157,12 @@ void idaapi run(int /*arg*/)
 							bool isRead = !!(usage & op_acc_type::T_READ);
 							bool isWrite = !!(usage & op_acc_type::T_WRITE);
 							if(exist == op_usage.end()) {
-								op_acc newUsage = { BADADDR, BADADDR };
+								op_acc newUsage = { BADADDR, BADADDR, BADADDR };
 								if(isRead) {
 									newUsage.firstRead = tmpEa;
 								}
 								if(isWrite) {
+									newUsage.firstWrite = tmpEa;
 									newUsage.lastWrite = tmpEa;
 								}
 								op_usage[ident] = newUsage;
@@ -168,6 +174,9 @@ void idaapi run(int /*arg*/)
 									}
 								}
 								if(isWrite) {
+									if(oldUsage.firstWrite == BADADDR || oldUsage.firstWrite > tmpEa) {
+										oldUsage.firstWrite = tmpEa;
+									}
 									if(oldUsage.lastWrite == BADADDR || oldUsage.lastWrite < tmpEa) {
 										oldUsage.lastWrite = tmpEa;
 									}
@@ -202,14 +211,16 @@ void idaapi run(int /*arg*/)
 	qstring writes;
 
 	std::for_each(op_usage.begin(), op_usage.end(), [&reads, &writes](const std::pair<const op_ident, op_acc>& p) -> void {
-		bool isRead = (p.second.firstRead != BADADDR);
 		bool isWrite = (p.second.lastWrite != BADADDR);
+		bool isRead = (p.second.firstRead != BADADDR && p.second.firstRead < p.second.firstWrite);
 		auto readStatus = isRead ? 'R' : ' ';
 		auto writeStatus = isWrite ? 'W' : ' ';
 
 		if(p.first.regIdx == R_sp) {
 			auto offs = p.first.stkOffs;
 			//stkvar
+
+			msg("Stack offset %03X: %c%c\n", offs, readStatus, writeStatus);
 
 			if(isRead) {
 				reads.cat_sprnt("\tGET_STACK(DWORD, rs_%x, 0x%x);\n", offs, offs);
