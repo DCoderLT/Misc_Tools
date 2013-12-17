@@ -1,0 +1,3 @@
+This IDA script will check if all code cross-references leading to a particular address have the same stack pointer. In fact, it will check all addresses belonging to the current function for this problem, and highlight problematic addresses.
+
+This script was written back when I was working on Ares, because evidently I hit this bug so often that automation was necessary.
